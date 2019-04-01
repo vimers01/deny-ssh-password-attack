@@ -7,5 +7,8 @@ Openwrt does not have its own tools to combat SSH cracking. In order to make our
 
 在Openwrt增加以下 crontab 内容:
 
-crontab -e
+执行命令: crontab -e
+
+然后贴入以下内容:
+
 30 */3 * * * /root/DenyPwdHack.sh

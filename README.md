@@ -8,7 +8,7 @@ Openwrt does not have its own tools to combat SSH cracking. To make our Internet
 
 操作步骤如下:
 
-下载文件DenyPwdHack.sh , 放在 /root/ 目录下, 然后 在Openwrt增加以下 crontab 内容:
+下载文件DenyPwdHack.sh , 以root登录，放在 /root/ 目录下, 然后执行 chmod u+x /root/DenyPwdHack.sh 在Openwrt增加以下 crontab 内容:
 
 执行命令: crontab -e
 

@@ -4,7 +4,7 @@ Openwrt 自身没有对抗ssh破解的工具,为了当我们暴露在互联网�
 
 Openwrt does not have its own tools to combat SSH cracking. In order to make our routers more secure when exposed to the Internet, we wrote a small script based on iptables, and the script was executed by crontab timing.
 
-脚本的功能是读取 logread 中 ssh 和 luci (443端口) 的失败日志,对于失败次数超过10次的同一个IP,在Iptables 中增加一条封锁规则,并记录日志到 /tmp/DenyPwdHack.log .
+脚本的功能是读取 logread 中 ssh(50022端口) 和 luci (443端口) 的失败日志,对于失败次数超过10次的同一个IP,在Iptables 中增加一条封锁规则,并记录日志到 /tmp/DenyPwdHack.log .
 
 操作步骤如下:
 
@@ -15,3 +15,5 @@ Openwrt does not have its own tools to combat SSH cracking. In order to make our
 然后贴入以下内容:   0 */3 * * * /root/DenyPwdHack.sh
 
 每三个小时执行一次脚本.
+
+

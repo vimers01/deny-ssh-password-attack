@@ -1,23 +1,23 @@
 ChainName=DenyPwdHack
-SSH_PORT=50022
+SSH_PORT=22
 Luci_Port=443
 LOG_DEST=/tmp/DenyPwdHack.log
 INPUT_RULE="INPUT -p tcp -m multiport --dports $SSH_PORT,$Luci_Port -j $ChainName"
-## ÈÕÖ¾¹Ø¼ü×Ö,Ã¿¸ö¹Ø¼ü×Ö¿ÉÒÔÓÃ"|"ºÅ¸ô¿ª,Ö§³ÖgrepµÄÕýÔò±í´ïÊ½
+## æ—¥å¿—å…³é”®å­—,æ¯ä¸ªå…³é”®å­—å¯ä»¥ç”¨"|"å·éš”å¼€,æ”¯æŒgrepçš„æ­£åˆ™è¡¨è¾¾å¼
 LOG_KEY_WORD="auth\.info\s+sshd.*Failed password for|luci:\s+failed\s+login"
-## °×Ãûµ¥IP¿ÉÒÔÓÃ"|"ºÅ¸ô¿ª,Ö§³ÖgrepµÄÕýÔò±í´ïÊ½
+## ç™½åå•IPå¯ä»¥ç”¨"|"å·éš”å¼€,æ”¯æŒgrepçš„æ­£åˆ™è¡¨è¾¾å¼
 exclude_ip="192.168.|127.0.0.1"
-## Ê§°Ü´ÎÊý
+## å¤±è´¥æ¬¡æ•°
 Failed_times=10
 
-## ÅÐ¶ÏÁ´ÊÇ·ñ´æÔÚ
+## åˆ¤æ–­é“¾æ˜¯å¦å­˜åœ¨
 iptables --list $ChainName > /dev/null 2>&1
 if [[ $? == 1 ]] ; then
 	iptables -N $ChainName
 	echo '['`date +%Y%m%d_%H:%M:%S`'] '"iptables -N $ChainName" >> $LOG_DEST
 fi
 
-## ÅÐ¶ÏINPUTÌøµ½Á´µÄ¹æÔòÊÇ·ñ´æÔÚ
+## åˆ¤æ–­INPUTè·³åˆ°é“¾çš„è§„åˆ™æ˜¯å¦å­˜åœ¨
 iptables -C $INPUT_RULE > /dev/null 2>&1
 if [[ $? == 1 ]] ; then
 	iptables -I $INPUT_RULE

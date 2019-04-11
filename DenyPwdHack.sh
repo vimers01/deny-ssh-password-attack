@@ -25,7 +25,7 @@ if [[ $? == 1 ]] ; then
 fi
 
 DenyIPLIst=`logread \
-	| awk '/'"$LOG_KEY_WORD"'/ {for(i=1;i<=NF;i++) if($i~/[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/) print $i}'\
+	| awk '/'"$LOG_KEY_WORD"'/ {for(i=1;i<=NF;i++) if($i~/^(([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/) print $i}'\
        	| grep -v $exclude_ip \
 	| sort |uniq -c \
 	| awk '{if($1>'"$Failed_times"') print $2}'`

@@ -17,20 +17,21 @@ Openwrt does not have its own tools to combat SSH cracking. To make our Internet
 每三个小时执行一次脚本.
 
 脚本中的参数：
+
 SSH_PORT=22
-## 是SSH的端口，请根据自己的实际情况填写，一般是22端口
+#是SSH的端口，请根据自己的实际情况填写，一般是22端口
 
 Luci_Port=443
-## 是Luci的登录端口，请根据自己的实际情况填写，一般是80端口，如果采用https，一般是443端口
+#是Luci的登录端口，请根据自己的实际情况填写，一般是80端口，如果采用https，一般是443端口
 
 LOG_DEST=/tmp/DenyPwdHack.log
-## 日志的绝对路径，因为 /tmp文件系统从内存中开辟的，写到该文件系统速度快，对芯片也安全
+#日志的绝对路径，因为 /tmp文件系统从内存中开辟的，写到该文件系统速度快，对芯片也安全
 
 LOG_KEY_WORD="auth\.info\s+sshd.*Failed password for|luci:\s+failed\s+login"
-## 日志关键字,每个关键字可以用"|"号隔开,支持awk的正则表达式
+#日志关键字,每个关键字可以用"|"号隔开,支持awk的正则表达式
 
 exclude_ip="192.168.|127.0.0.1"
-## 白名单IP可以用"|"号隔开,支持grep的正则表达式## 失败次数
+#白名单IP可以用"|"号隔开,支持grep的正则表达式## 失败次数
 
 Failed_times=10
-## 登录失败封锁IP的阈值
+#登录失败封锁IP的阈值

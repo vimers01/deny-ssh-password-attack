@@ -33,4 +33,4 @@ exclude_ip="192.168.|127.0.0.1"
 Failed_times=10
 
 #黑名单过期时间,单位小时,3个月2160小时
-WhiteList_exp=2160
+BlackList_exp=2160

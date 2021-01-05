@@ -11,8 +11,8 @@ ChainName=DenyPwdHack
 ## 日志路径
 LOG_DEST=/tmp/DenyPwdHack.log
 
-## 检测到攻击时需要针对攻击IP封禁的端口,可以将ssh/luci/等端口加上
-Deny_Port="56722,50443"
+## 检测到攻击时需要针对攻击IP封禁的端口,可以将ssh/luci/ftp等端口加上
+Deny_Port="22,443"
 INPUT_RULE="INPUT -p tcp -m multiport --dports $Deny_Port -j $ChainName"
 
 ## 日志关键字,每个关键字可以用"|"号隔开,支持grep的正则表达式

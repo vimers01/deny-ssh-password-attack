@@ -27,7 +27,7 @@ exclude_ip="192.168.|127.0.0.1"
 Failed_times=5
 
 ## 黑名单过期时间,单位小时,3个月2160小时
-WhiteList_exp=2160
+BlackList_exp=2160
 
 ## 日志时间
 LOG_DT=`date "+%Y-%m-%d %H:%M:%S"`
@@ -75,7 +75,7 @@ do
   Dtime=`echo "${ChainList}" | sed -n ''"$tl"'p' | awk -F, '{print $2}'`
   Stime=`date -d "$Dtime" +%s`
   Ntime=`date +%s`
-  if [[ $(($Ntime - $Stime)) -ge $(($WhiteList_exp * 3600)) ]] ; then
+  if [[ $(($Ntime - $Stime)) -ge $(($BlackList_exp * 3600)) ]] ; then
     RuleNum=`echo "${ChainList}" | sed -n ''"$tl"'p' | awk -F, '{print $1}'`
     iptables -D $ChainName $RuleNum
     if [[ $? -eq 0 ]] ; then

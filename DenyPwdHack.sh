@@ -69,7 +69,8 @@ ChainList=`iptables --line-numbers -nL $ChainName |\
   sort -rn`
 
 ## 链表必须从后端删除,如果从前端删除,后端的实际rulenum会变
-ChainList_num=`echo "${ChainList}" | wc -l`
+ChainList_num=`echo "${ChainList}" | grep -v "^$" | wc -l`
+if [[ ! -z $ChainList ]] && [[ $ChainList_num -gt 0 ]] ; then
 for tl in `seq 1 $ChainList_num`
 do
   Dtime=`echo "${ChainList}" | sed -n ''"$tl"'p' | awk -F, '{print $2}'`
@@ -85,3 +86,4 @@ do
     fi
   fi
 done
+fi

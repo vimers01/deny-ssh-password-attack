@@ -18,7 +18,7 @@ INPUT_RULE="INPUT -p tcp -m multiport --dports $Deny_Port -j $ChainName"
 ## 日志关键字,每个关键字可以用"|"号隔开,支持grep的正则表达式
 ## 注: SSH 攻击可以大量出现四种关键字：Invalid user/Failed password for/Received disconnect from/Disconnected from authenticating
 ##     Luci 攻击可以出现"luci: failed login on / for root from xx.xx.xx.xx"
-LOG_KEY_WORD="auth\.info\s+sshd.*Failed password for|luci:\s+failed\s+login"
+LOG_KEY_WORD="auth\.info\s+sshd.*Failed password for|luci:\s+failed\s+login|auth\.info.*sshd.*Connection closed by.*port.*preauth"
 
 ## 白名单IP可以用"|"号隔开,支持grep的正则表达式
 exclude_ip="192.168.|127.0.0.1"
@@ -33,7 +33,7 @@ BlackList_exp=2160
 LOG_DT=`date "+%Y-%m-%d %H:%M:%S"`
 
 ## 判断链是否存在
-iptables --list $ChainName > /dev/null 2>&1
+iptables -n --list $ChainName > /dev/null 2>&1
 if [[ $? -ne 0 ]] ; then
   iptables -N $ChainName
   echo "[$LOG_DT] iptables -N $ChainName" >> $LOG_DEST
@@ -70,7 +70,7 @@ ChainList=`iptables --line-numbers -nL $ChainName |\
 
 ## 链表必须从后端删除,如果从前端删除,后端的实际rulenum会变
 ChainList_num=`echo "${ChainList}" | grep -v "^$" | wc -l`
-if [[ ! -z $ChainList ]] && [[ $ChainList_num -gt 0 ]] ; then
+if [[ ${#ChainList} -ne 0 ]] && [[ $ChainList_num -gt 0 ]] ; then
 for tl in `seq 1 $ChainList_num`
 do
   Dtime=`echo "${ChainList}" | sed -n ''"$tl"'p' | awk -F, '{print $2}'`
